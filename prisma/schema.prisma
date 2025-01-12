@@ -12,3 +12,91 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  username     String         @unique
+  email        String         @unique
+  role         UserRole
+  password     String
+  status       UserStatus     @default(ACTIVE)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  UserProfile  UserProfile?
+  Event        Event[]
+  Attendee     Attendee[]
+  Notification Notification[]
+
+  @@map("users")
+}
+
+model UserProfile {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String   @unique @db.ObjectId
+  name       String?
+  image      String?
+  bio        String?
+  profession String?
+  address    String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("user_profiles")
+}
+
+model Event {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  date         DateTime
+  location     String
+  maxAttendees Int
+  createdById  String         @db.ObjectId
+  createdBy    User           @relation(fields: [createdById], references: [id])
+  attendees    Attendee[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  Notification Notification[]
+
+  @@map("events")
+}
+
+model Attendee {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  eventId   String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  event     Event    @relation(fields: [eventId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, eventId])
+  @@map("attendees")
+}
+
+model Notification {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String?  @db.ObjectId
+  user      User?    @relation(fields: [userId], references: [id])
+  eventId   String?  @db.ObjectId
+  event     Event?   @relation(fields: [eventId], references: [id])
+  message   String
+  createdAt DateTime @default(now())
+  isRead    Boolean  @default(false)
+}
+
+enum Status {
+  PENDING
+  BOOKED
+  REJECTED
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+}
