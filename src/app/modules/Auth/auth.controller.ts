@@ -5,7 +5,6 @@ import { authServices } from "./auth.service";
 
 const loginUser = catchAsync(async (req, res) => {
   const result = await authServices.loginUser(req.body);
-
   const { refreshToken } = result;
 
   res.cookie("refreshToken", refreshToken, {

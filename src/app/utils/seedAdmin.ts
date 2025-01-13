@@ -17,7 +17,7 @@ export const seedAdmin = async () => {
     }
 
     const hashedPassword = await bcrypt.hash(
-      config.admin.admin_username as string,
+      config.admin.admin_password as string,
       12
     );
 

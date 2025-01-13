@@ -1,7 +1,5 @@
 import prisma from "../../utils/prisma";
 
-interface RegisterForEventInput {}
-
 const registerForEvent = async (userId: string, eventId: string) => {
   const event = await prisma.event.findUniqueOrThrow({
     where: { id: eventId },

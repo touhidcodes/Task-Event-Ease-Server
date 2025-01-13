@@ -5,13 +5,14 @@ import httpStatus from "http-status";
 import router from "./app/router/routes";
 import cookieParser from "cookie-parser";
 import globalErrorHandler from "./app/middlewares/globalErrorHandler";
+import bodyParser from "body-parser";
 
 dotenv.config();
 
 const app: Application = express();
 
 const corsOptions = {
-  origin: ["https://flat-mate-finder.vercel.app", "http://localhost:3000"],
+  origin: ["http://localhost:3000"],
   methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
   preflightContinue: false,
   optionsSuccessStatus: 204,
@@ -22,6 +23,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // Application Routes
 app.use("/api", router);
