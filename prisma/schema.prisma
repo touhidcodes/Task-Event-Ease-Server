@@ -52,6 +52,7 @@ model Event {
   date         DateTime
   location     String
   maxAttendees Int
+  isDeleted    Boolean        @default(false)
   createdById  String         @db.ObjectId
   createdBy    User           @relation(fields: [createdById], references: [id])
   attendees    Attendee[]
