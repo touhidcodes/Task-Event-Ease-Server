@@ -49,7 +49,7 @@ model UserProfile {
 model Event {
   id           String         @id @default(auto()) @map("_id") @db.ObjectId
   name         String
-  date         DateTime
+  date         String
   location     String
   maxAttendees Int
   isDeleted    Boolean        @default(false)
