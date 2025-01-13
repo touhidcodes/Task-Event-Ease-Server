@@ -54,7 +54,7 @@ const getMyAttendedEvents = async (userId: string) => {
   return events;
 };
 
-export const attendeeService = {
+export const attendeeServices = {
   registerForEvent,
   getAttendeesByEvent,
   getMyAttendedEvents,
