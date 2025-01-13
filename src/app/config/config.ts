@@ -4,11 +4,11 @@ import path from "path";
 // Load environment variables from .env file
 dotenv.config({ path: path.join(process.cwd(), ".env") });
 
-// if (!process.env.ADMIN_EMAIL) {
-//   throw new Error(
-//     "SUPER_ADMIN_EMAIL is not defined in the environment variables"
-//   );
-// }
+if (!process.env.ADMIN_EMAIL) {
+  throw new Error(
+    "SUPER_ADMIN_EMAIL is not defined in the environment variables"
+  );
+}
 
 export default {
   env: process.env.NODE_ENV,

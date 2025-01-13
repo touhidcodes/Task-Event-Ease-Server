@@ -1,6 +1,6 @@
 import * as bcrypt from "bcrypt";
 import prisma from "../../utils/prisma";
-import { Prisma, User, UserProfile } from "@prisma/client";
+import { Prisma, UserProfile } from "@prisma/client";
 import { TUserData } from "./user.interface";
 import APIError from "../../errors/APIError";
 import httpStatus from "http-status";
@@ -72,7 +72,7 @@ const getAllUser = async (currentUserEmail: string) => {
   const result = await prisma.user.findMany({
     where: {
       email: {
-        notIn: [config.superAdmin.super_admin_email, currentUserEmail],
+        notIn: [config.admin.admin_email, currentUserEmail],
       },
     },
   });

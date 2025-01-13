@@ -38,23 +38,23 @@ const getEvents = async (params: any, options: TPaginationOptions) => {
     });
   }
 
-  if (date) {
-    andConditions.push({
-      date: {
-        gte: new Date(date),
-      },
-    });
-  }
+  // if (date) {
+  //   andConditions.push({
+  //     date: {
+  //       gte: new Date(date),
+  //     },
+  //   });
+  // }
 
-  if (Object.keys(filterData).length > 0) {
-    andConditions.push({
-      AND: Object.keys(filterData).map((key) => ({
-        [key]: {
-          equals: (filterData as any)[key],
-        },
-      })),
-    });
-  }
+  // if (Object.keys(filterData).length > 0) {
+  //   andConditions.push({
+  //     AND: Object.keys(filterData).map((key) => ({
+  //       [key]: {
+  //         equals: (filterData as any)[key],
+  //       },
+  //     })),
+  //   });
+  // }
 
   const whereConditions: Prisma.EventWhereInput =
     andConditions.length > 0 ? { AND: andConditions } : {};
