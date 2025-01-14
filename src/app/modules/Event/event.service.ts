@@ -87,17 +87,17 @@ const getEvents = async (params: any, options: TPaginationOptions) => {
   };
 };
 
-const getSingleEvent = async (eventId: string) => {
-  const result = await prisma.event.findUniqueOrThrow({
-    where: {
-      id: eventId,
-    },
-    include: {
-      attendees: true,
-    },
-  });
-  return result;
-};
+// const getSingleEvent = async (eventId: string) => {
+//   const result = await prisma.event.findUniqueOrThrow({
+//     where: {
+//       id: eventId,
+//     },
+//     include: {
+//       attendees: true,
+//     },
+//   });
+//   return result;
+// };
 
 const getMyEvents = async (userId: string) => {
   const result = await prisma.event.findMany({
@@ -133,7 +133,7 @@ const deleteEvent = async (eventId: string) => {
 export const eventServices = {
   createEvent,
   getEvents,
-  getSingleEvent,
+  // getSingleEvent,
   getMyEvents,
   updateEvent,
   deleteEvent,

@@ -32,21 +32,21 @@ const getEvents = catchAsync(async (req, res) => {
   });
 });
 
-const getSingleEvent = catchAsync(async (req, res) => {
-  const { eventId } = req.params;
-  const result = await eventServices.getSingleEvent(eventId);
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Event retrieved successfully!",
-    data: result,
-  });
-});
+// const getSingleEvent = catchAsync(async (req, res) => {
+//   const { eventId } = req.params;
+//   const result = await eventServices.getSingleEvent(eventId);
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: "Event retrieved successfully!",
+//     data: result,
+//   });
+// });
 
 const getMyEvent = catchAsync(async (req, res) => {
   const { userId } = req.user;
-
-  const result = await eventServices.getSingleEvent(userId);
+  console.log(req.user);
+  const result = await eventServices.getMyEvents(userId);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -82,7 +82,7 @@ const deleteEvent = catchAsync(async (req, res) => {
 export const eventControllers = {
   createEvent,
   getEvents,
-  getSingleEvent,
+  // getSingleEvent,
   getMyEvent,
   updateEvent,
   deleteEvent,

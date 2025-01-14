@@ -11,7 +11,7 @@ const router = express.Router();
 router.get("/all", eventControllers.getEvents);
 
 // Public route to get a single event by ID
-router.get("/:eventId", eventControllers.getSingleEvent);
+// router.get("/:eventId", eventControllers.getSingleEvent);
 
 // Route for authenticated users to get their created events
 router.get(

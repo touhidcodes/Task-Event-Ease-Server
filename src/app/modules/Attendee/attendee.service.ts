@@ -36,10 +36,9 @@ const registerForEvent = async (userId: string, eventId: string) => {
   return attendee;
 };
 
-const getAttendeesByEvent = async (eventId: string) => {
+const getAllAttendees = async () => {
   const attendees = await prisma.attendee.findMany({
-    where: { eventId },
-    include: { user: true },
+    include: { user: true, event: true },
   });
   return attendees;
 };
@@ -54,6 +53,6 @@ const getMyAttendedEvents = async (userId: string) => {
 
 export const attendeeServices = {
   registerForEvent,
-  getAttendeesByEvent,
+  getAllAttendees,
   getMyAttendedEvents,
 };

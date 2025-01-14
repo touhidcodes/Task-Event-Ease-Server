@@ -7,19 +7,19 @@ const router = express.Router();
 
 // Route to register for an event
 router.post(
-  "/:eventId/register",
+  "/register",
   auth(UserRole.USER, UserRole.ADMIN),
   attendeeControllers.registerForEventController
 );
 
-// Route to get all attendees of a specific event
-router.get("/:eventId", attendeeControllers.getAttendeesByEventController);
+// Route to get all attendees
+router.get("/all", auth(UserRole.ADMIN), attendeeControllers.getAllAttendees);
 
 // Route to get all events of a specific user
 router.get(
   "/my-events",
   auth(UserRole.USER, UserRole.ADMIN),
-  attendeeControllers.getMyAttendedEventsController
+  attendeeControllers.getMyAttendedEvents
 );
 
 export const attendeeRoutes = router;
