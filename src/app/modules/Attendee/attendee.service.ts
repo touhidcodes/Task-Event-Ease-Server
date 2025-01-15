@@ -1,4 +1,7 @@
+import { io } from "../../../server";
+import APIError from "../../errors/APIError";
 import prisma from "../../utils/prisma";
+import httpStatus from "http-status";
 
 const registerForEvent = async (userId: string, eventId: string) => {
   const event = await prisma.event.findUniqueOrThrow({
@@ -23,7 +26,10 @@ const registerForEvent = async (userId: string, eventId: string) => {
     },
   });
   if (existingAttendee) {
-    throw new Error("User is already registered for this event.");
+    throw new APIError(
+      httpStatus.CONFLICT,
+      "User is already registered for this event."
+    );
   }
 
   // Register the user for the event
@@ -32,7 +38,15 @@ const registerForEvent = async (userId: string, eventId: string) => {
       userId,
       eventId,
     },
+    include: { user: true, event: true },
   });
+
+  io.emit("new_attendee", {
+    eventId: attendee.eventId,
+    attendeeName: attendee.user.username,
+    message: `${attendee.user.username} has registered for event ID ${attendee.event.name}.`,
+  });
+
   return attendee;
 };
 

@@ -15,6 +15,7 @@ const auth = (...roles: string[]) => {
       if (!token) {
         throw new APIError(httpStatus.UNAUTHORIZED, "Unauthorized Access!");
       }
+      // console.log(token);
 
       const decodedUser = jwtHelpers.verifyToken(
         token,

@@ -2,6 +2,7 @@ import { Event, Prisma } from "@prisma/client";
 import prisma from "../../utils/prisma";
 import { TPaginationOptions } from "../../interfaces/pagination";
 import { paginationHelper } from "../../utils/paginationHelpers";
+import { io } from "../../../server";
 
 const createEvent = async (eventData: Event, userId: string) => {
   const data = {
@@ -11,6 +12,14 @@ const createEvent = async (eventData: Event, userId: string) => {
   const result = await prisma.event.create({
     data,
   });
+
+  // Emit event creation notification to all clients
+  io.emit("new_event", {
+    eventId: result.id,
+    name: result.name,
+    message: `New event has registered for ${result.id}.`,
+  });
+
   return result;
 };
 
