@@ -8,36 +8,32 @@ import { seedAdmin } from "./app/utils/seedAdmin";
 const server: HttpServer = new HttpServer(app);
 
 // Initialize Socket.IO
-const io = new SocketIOServer(server, {
+export const io = new SocketIOServer(server, {
   cors: {
-    origin: ["http://localhost:3000", "*"],
+    origin: ["http://localhost:3000", "https://event-ease-web.vercel.app"],
     methods: ["GET", "POST"],
   },
 });
 
-// Socket.IO connection handling
-io.on("connection", (socket) => {
-  console.log("A user connected:", socket.id);
-
-  socket.on("disconnect", () => {
-    console.log("A user disconnected:", socket.id);
-  });
-
-  // Custom events
-  socket.on("example_event", (data) => {
-    console.log("Received example_event with data:", data);
-  });
-});
-
-// Start the server
 async function main() {
-  seedAdmin();
+  // Socket.IO connection handling
+  io.on("connection", (socket) => {
+    console.log("A user connected:", socket.id);
 
-  server.listen(config.port, () => {
+    socket.on("disconnect", () => {
+      console.log("A user disconnected:", socket.id);
+    });
+  });
+
+  server.listen(config.port, async () => {
+    await seedAdmin();
     console.log("Server is running on port ", config.port);
   });
 }
 
 main();
 
-export { io, server };
+// Export a default handler for Vercel
+export default (req: any, res: any) => {
+  app(req, res);
+};
