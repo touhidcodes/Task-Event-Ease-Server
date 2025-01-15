@@ -63,8 +63,8 @@ ADMIN_USERNAME="admin"
 ADMIN_EMAIL="admin@eventease.com"
 ADMIN_PASSWORD="admin@eventease"
 USER_USERNAME="user"
-USER_EMAIL="user@user.com"
-USER_PASSWORD="password"
+USER_EMAIL="user@eventease.com"
+USER_PASSWORD="user@eventease"
 ```
 
 3. **Run the application:**
